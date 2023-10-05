@@ -10,6 +10,10 @@ public class DialogueController : MonoBehaviour
     public Text dialogueText;
     public AudioSource audioSource;
     public GameObject telephoneUI;
+    public GameObject mission1UI;
+    public GameObject mission2UI;
+    public GameObject mission3UI;
+    public bool missionAccomplished = false;
 
     [System.Serializable]
     public class DialogueLine
@@ -81,5 +85,23 @@ public class DialogueController : MonoBehaviour
             yield return null;
         }
         telephoneUI.SetActive(false);
+        Mission1();
+    }
+
+    void Mission1()
+    {
+        mission1UI.SetActive(true);
+    }
+
+    void Mission2()
+    {
+        mission1UI.SetActive(false);
+        mission2UI.SetActive(true);
+    }
+
+    void Mission3()
+    {
+        mission2UI.SetActive(false);
+        mission3UI.SetActive(true);
     }
 }
