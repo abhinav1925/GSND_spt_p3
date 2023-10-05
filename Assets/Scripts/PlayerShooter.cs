@@ -18,7 +18,8 @@ public class PlayerShooter : MonoBehaviour
     private AudioSource m_Source;
     [SerializeField]
     private Animator m_Anim;
-
+    [SerializeField]
+    private ParticleSystem Salt;
     private float m_Timer = 0;
     private Vector3 CenterPoint;
     public float RemainShootPower;
@@ -76,6 +77,18 @@ public class PlayerShooter : MonoBehaviour
                 }
             }
         }
+
+        if(IsShooting)
+        {
+            m_Anim.SetBool("isShooting", true);
+            StartCoroutine(PlayEffects());
+           
+        }
+        else
+        {
+            m_Anim.SetBool("isShooting", false);
+            Salt.Stop();
+        }
     }
 
     public void ShootOneBullet()
@@ -98,5 +111,11 @@ public class PlayerShooter : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawSphere(CenterPoint, 0.1f);
+    }
+
+   IEnumerator PlayEffects()
+    {
+        yield return new WaitForSeconds(0.35f);
+        Salt.Play();
     }
 }
