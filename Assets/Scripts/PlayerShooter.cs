@@ -81,20 +81,19 @@ public class PlayerShooter : MonoBehaviour
         if(IsShooting)
         {
             m_Anim.SetBool("isShooting", true);
-            StartCoroutine(PlayEffects());
            
         }
         else
         {
             m_Anim.SetBool("isShooting", false);
-            Salt.Stop();
         }
     }
 
     public void ShootOneBullet()
     {
-        if(Physics.Raycast(Camera.main.ScreenPointToRay(new Vector3(Screen.width/2,Screen.height/2,0)),out RaycastHit hit,float.MaxValue,ShootLayer))
+        if(Physics.Raycast(Camera.main.ScreenPointToRay(new Vector3(Screen.width/2,Screen.height/2,0)),out RaycastHit hit,float.MaxValue,ShootLayer,QueryTriggerInteraction.Ignore))
         {
+            Debug.Log(hit.transform.name);
             CenterPoint = hit.point;
             if (hit.transform.TryGetComponent(out EnemyHit enemyHit))
             {
@@ -105,17 +104,12 @@ public class PlayerShooter : MonoBehaviour
 
         m_Source.PlayOneShot(ShootClip);
         RemainShootPower -= PerShootCost;
+        Salt.Play();
     }
 
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawSphere(CenterPoint, 0.1f);
-    }
-
-   IEnumerator PlayEffects()
-    {
-        yield return new WaitForSeconds(0.35f);
-        Salt.Play();
     }
 }
