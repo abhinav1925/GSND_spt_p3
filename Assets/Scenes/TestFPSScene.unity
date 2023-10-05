@@ -394,7 +394,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   FullHP: 100
-  ShowHitFeedback: 0
+  ShowHitFeedback: 1
   RedMat: {fileID: 2100000, guid: 059d7b835b60ff2499686bb7b34cfa7c, type: 2}
   RedTime: 0.2
   m_Renderer: {fileID: 1210712322}
