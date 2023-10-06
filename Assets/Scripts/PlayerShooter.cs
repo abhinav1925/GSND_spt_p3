@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class PlayerShooter : MonoBehaviour
 {
@@ -23,7 +24,7 @@ public class PlayerShooter : MonoBehaviour
     private float m_Timer = 0;
     private Vector3 CenterPoint;
     public float RemainShootPower;
-
+    [SerializeField] GameObject ghost;
     public bool IsShooting { get; set; }
 
 
@@ -37,15 +38,19 @@ public class PlayerShooter : MonoBehaviour
     void Update()
     {
         UpdateShoot();
+        if (FindObjectOfType<DialogueController>().dialEnd)
+        {
+            ghost.SetActive(true);
+        }
     }
 
     public void OnShoot(InputAction.CallbackContext context)
     {
-        if(context.performed)
+        if (context.performed)
         {
             IsShooting = true;
         }
-        else if(context.canceled)
+        else if (context.canceled)
         {
             IsShooting = false;
         }
@@ -53,9 +58,9 @@ public class PlayerShooter : MonoBehaviour
 
     public void UpdateShoot()
     {
-        if(m_Timer<=0)
+        if (m_Timer <= 0)
         {
-            if(IsShooting && RemainShootPower>PerShootCost)
+            if (IsShooting && RemainShootPower > PerShootCost)
             {
                 ShootOneBullet();
                 m_Timer = ShootIntervalTime;
@@ -66,7 +71,7 @@ public class PlayerShooter : MonoBehaviour
             m_Timer -= Time.deltaTime;
         }
 
-        if(!IsShooting)
+        if (!IsShooting)
         {
             if (RemainShootPower < MaxShootPower)
             {
@@ -78,10 +83,10 @@ public class PlayerShooter : MonoBehaviour
             }
         }
 
-        if(IsShooting)
+        if (IsShooting)
         {
             m_Anim.SetBool("isShooting", true);
-           
+
         }
         else
         {
@@ -91,7 +96,7 @@ public class PlayerShooter : MonoBehaviour
 
     public void ShootOneBullet()
     {
-        if(Physics.Raycast(Camera.main.ScreenPointToRay(new Vector3(Screen.width/2,Screen.height/2,0)),out RaycastHit hit,float.MaxValue,ShootLayer,QueryTriggerInteraction.Ignore))
+        if (Physics.Raycast(Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0)), out RaycastHit hit, float.MaxValue, ShootLayer, QueryTriggerInteraction.Ignore))
         {
             Debug.Log(hit.transform.name);
             CenterPoint = hit.point;
@@ -112,4 +117,11 @@ public class PlayerShooter : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawSphere(CenterPoint, 0.1f);
     }
+
+
+  
+
+   
+
+    
 }

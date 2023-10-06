@@ -7,7 +7,8 @@ using UnityEngine;
 public class BossTrigger : MonoBehaviour
 {
    public GameObject InteractMenu;
-   
+    public GameObject Ghost;
+    GameObject spawned;
    private void OnTriggerEnter(Collider other)
    {
       if (other.gameObject.CompareTag("Player"))
@@ -21,8 +22,10 @@ public class BossTrigger : MonoBehaviour
    {
       if (other.gameObject.CompareTag("Player") && Input.GetKeyDown(KeyCode.E))
       {
-         InteractMenu.SetActive(false);
-         // Spawn boss here
+            //InteractMenu.SetActive(false);
+            // Spawn boss here
+            spawned =  Instantiate(Ghost, new Vector3(99.3399963f, 38.5f, 40.3100014f), Quaternion.identity);
+            StartCoroutine(Tempdisable());
       }
    }
 
@@ -30,4 +33,12 @@ public class BossTrigger : MonoBehaviour
    {
       InteractMenu.SetActive(false);
    }
+
+    IEnumerator Tempdisable()
+    {
+        
+        yield return new WaitForSeconds(2f);
+        spawned.GetComponentInChildren<SphereCollider>().enabled = true;
+
+    }
 }

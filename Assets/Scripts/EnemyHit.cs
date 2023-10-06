@@ -51,6 +51,7 @@ public class EnemyHit : MonoBehaviour
     public void EnemyDie()
     {
         IsDead= true;
+        Destroy(this.gameObject);
         Debug.Log("EnemyDie");
     }
 

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class DialogueController : MonoBehaviour
@@ -14,6 +15,7 @@ public class DialogueController : MonoBehaviour
     public GameObject mission2UI;
     public GameObject mission3UI;
     public bool missionAccomplished = false;
+    public bool dialEnd = false;
 
     [System.Serializable]
     public class DialogueLine
@@ -21,6 +23,7 @@ public class DialogueController : MonoBehaviour
         public string name;
         public string sentence;
         public AudioClip audioClip;
+       
     }
 
     public DialogueLine[] lines;
@@ -84,7 +87,9 @@ public class DialogueController : MonoBehaviour
         {
             yield return null;
         }
+        SceneManager.LoadScene("SecondFloor");
         telephoneUI.SetActive(false);
+       
         Mission1();
     }
 
